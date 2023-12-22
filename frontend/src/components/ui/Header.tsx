@@ -1,11 +1,14 @@
+import { useAppSelector } from "../../redux/hook";
 import Brand from "./Brand";
 import SignInLink from "./SignInLink";
+import SignOutLink from "./SignOutLink";
 
 function Header() {
+  const { isConnected } = useAppSelector(state => state.user);
   return (
     <nav className="main-nav">
       <Brand />
-      <SignInLink />
+      {isConnected ? <SignOutLink /> : <SignInLink />}
     </nav>
   );
 }

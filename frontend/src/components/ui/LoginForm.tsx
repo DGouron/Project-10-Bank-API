@@ -1,24 +1,32 @@
 import { useDispatch } from "react-redux"
 import { useAppSelector } from "../../redux/hook";
-import { fetchUser } from "../../redux/slices/userSlice";
+import { fetchUserLogin } from "../../redux/slices/userSlice";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 function LoginForm() {
 
   const dispatchEvent = useDispatch();
-  const { isConnecting } = useAppSelector(state => state.user);
+  const navigate = useNavigate();
+  const { isConnecting, isConnected } = useAppSelector(state => state.user);
+
+  useEffect(() => {
+    if (isConnected) {
+      navigate("/profile");
+    }
+  }, [isConnected])
 
   const handleLoginSubmition = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const username = event.currentTarget.username.value
+    const email = event.currentTarget.email.value
     const password = event.currentTarget.password.value
     const rememberMe = event.currentTarget.rememberme.checked
-    console.log(username, password, rememberMe)
-    dispatchEvent(fetchUser({ username, password, rememberMe }) as any)
+    dispatchEvent(fetchUserLogin({ email, password, rememberMe }) as any)
   }
   return (
     <form onSubmit={handleLoginSubmition}>
       <div className="input-wrapper">
-        <label htmlFor="username">Username</label><input type="text" id="username" />
+        <label htmlFor="email">Email</label><input type="text" id="email" />
       </div>
       <div className="input-wrapper">
         <label htmlFor="password">Password</label><input type="password" id="password" />
@@ -28,7 +36,8 @@ function LoginForm() {
           Remember Me
         </label>
       </div>
-      <button type="submit" className="sign-in-button" disabled={isConnecting}>Sign In</button>
+      <button type="submit" className="sign-in-button">Sign In</button>
+      {isConnecting && <p>Connexion en cours...</p>}
     </form>
   )
 }

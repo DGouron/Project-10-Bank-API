@@ -58,6 +58,7 @@ body {
 
 .main-nav-item:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .main-nav-logo {
@@ -288,4 +289,19 @@ body {
   .transaction-button {
     width: 200px;
   }
+}
+.signout--container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.userNameModifier--container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+.userNameModifier--form{
+  max-width: 33%;
+  width: 200px;
 }

@@ -9,62 +9,14 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /user/login:
-    post:
-      tags:
-        - User Module
-      summary: Login
-      description: API for Login
-      parameters:
-        - in: body
-          name: body
-          description: Login Payload
-          required: true
-          schema:
-            $ref: '#/definitions/Login'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Login Successfully
-          schema:
-            $ref: '#/definitions/LoginResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/signup:
-    post:
-      tags:
-        - User Module
-      summary: Signup
-      description: API for Signup
-      parameters:
-        - in: body
-          name: body
-          description: Signup Payload
-          required: true
-          schema:
-            $ref: '#/definitions/User'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Signup Successfully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/profile:
+  /transaction:
     post:
       security:
         - Bearer: []
       tags:
-        - User Module
-      summary: User Profile API
-      description: API for fetching a user profile
+        - Transaction Module
+      summary: Transaction API
+      description: API for fetching transactions
       parameters:
         - in: header
           name: Authorization
@@ -74,7 +26,31 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: Transactions retrieved successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /transaction/id:
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Transaction API
+      description: API for fetching transaction details
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction details retrieved successully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -85,9 +61,9 @@ paths:
       security:
         - Bearer: []
       tags:
-        - User Module
-      summary: User Profile API
-      description: API for updating a user profile
+        - Transaction Module
+      summary: Transaction API
+      description: API for updating a transaction
       parameters:
         - in: header
           name: Authorization
@@ -95,15 +71,15 @@ paths:
           required: true
         - in: body
           name: body
-          description: Update user profile attributes
+          description: Update transaction attributes
           required: true
           schema:
-            $ref: '#/definitions/UserProfile'
+            $ref: '#/definitions/Transaction'
       produces:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: Transaction details retrieved successully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -164,3 +140,22 @@ definitions:
         type: string
       lastName:
         type: string
+  Transaction:
+    type: object
+    properties:
+      id: 
+        type: string 
+      date:
+        type: string
+      description:
+        type: string
+      amount:
+        type: number
+      balance:
+        type: number
+      category: 
+        type: string 
+      notes:
+        type: string 
+
+
