@@ -9,8 +9,8 @@ basePath: /api/v1
 schemes:
   - http
 paths:
-  /transaction:
-    post:
+  /transaction/accountId:
+    get:
       security:
         - Bearer: []
       tags:
@@ -28,13 +28,15 @@ paths:
         '200':
           description: Transactions retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            type: array
+            items: 
+              $ref: '#/definitions/Transaction'
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
   /transaction/id:
-    post:
+    get:
       security:
         - Bearer: []
       tags:
@@ -52,7 +54,7 @@ paths:
         '200':
           description: Transaction details retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/Transaction'
         '400':
           description: Invalid Fields
         '500':
@@ -74,14 +76,21 @@ paths:
           description: Update transaction attributes
           required: true
           schema:
-            $ref: '#/definitions/Transaction'
+            type: object
+            properties: 
+              category:
+                type: string
+                description: The category of the transaction
+              note:
+                type: string
+                description: The note of the transaction  
       produces:
         - application/json
       responses:
         '200':
           description: Transaction details retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/Transaction'
         '400':
           description: Invalid Fields
         '500':

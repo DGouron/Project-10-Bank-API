@@ -8,7 +8,7 @@ function Profile() {
   const dispatchEvent = useDispatch();
   const { isConnected, userProfile } = useAppSelector(state => state.user);
 
-  const [displayUserNameModifier, setDisplayUserNameModifier] = useState(false);
+  const [displayUserNameModifier, setDisplayUserNameModifier] = useState<boolean>(false);
 
   useEffect(() => {
     if (isConnected) {

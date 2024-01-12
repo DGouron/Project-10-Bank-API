@@ -31,12 +31,14 @@ type UserManagementState = {
   isConnecting: boolean;
   isConnected: boolean;
   isFetchingProfile: boolean;
+  isModifyProfile: boolean;
   userProfile: User | undefined;
 };
 
 const initialState: UserManagementState = {
   isConnecting: false,
   isConnected: getTokenLocaly() !== null,
+  isModifyProfile: false,
   isFetchingProfile: false,
   userProfile: undefined,
 };
@@ -76,16 +78,16 @@ const userSlice = createSlice({
       state.isFetchingProfile = false;
     });
     builder.addCase(fetchModifyUserName.pending, (state) => {
-      state.isFetchingProfile = true;
+      state.isModifyProfile = true;
     });
     builder.addCase(fetchModifyUserName.fulfilled, (state, action) => {
-        state.isFetchingProfile = false;
+        state.isModifyProfile = false;
         if ('data' in action.payload) {
           state.userProfile = action.payload.data as User;
         }
     });
     builder.addCase(fetchModifyUserName.rejected, (state) => {
-      state.isFetchingProfile = false;
+      state.isModifyProfile = false;
     });
   },
 });
